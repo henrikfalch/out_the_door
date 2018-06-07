@@ -1,51 +1,55 @@
 import { me } from "companion";
 import * as messaging from "messaging";
-import { settingsStorage } from "settings";
+//import { settingsStorage } from "settings";
 
-import { BartAPI } from "./bart.js"
-import { TRAIN_COUNT, FAVORITE_STATION_SETTING } from "../common/globals.js";
+import { HFitAPI } from "./ruter.js"
+import { DEPATURE_COUNT, FAVORITE_STATION_SETTING, STATIONS } from "../common/stations.js";
 
-settingsStorage.onchange = function(evt) {
-  sendBartSchedule();
-}
+/*settingsStorage.onchange = function(evt) {
+  sendHFitSchedule();
+}*/
 
 // Listen for the onopen event
 messaging.peerSocket.onopen = function() {
-  // Ready to send or receive messages
-  sendBartSchedule();
+    // Ready to send or receive messages
+    sendHFitSchedule();
 }
 
 // Listen for the onmessage event
 messaging.peerSocket.onmessage = function(evt) {
-  // Output the message to the console
-  console.log(JSON.stringify(evt.data));
+    // Output the message to the console
+    console.log(JSON.stringify(evt.data));
 }
 
-function sendBartSchedule() {
-  let station = settingsStorage.getItem(FAVORITE_STATION_SETTING);
-  if (station) {
-    try {
-      station = JSON.parse(station);
+function sendHFitSchedule() {
+    /*let station = settingsStorage.getItem(FAVORITE_STATION_SETTING);
+    if (station) {
+      try {
+        station = JSON.parse(station);
+      }
+      catch (e) {
+        console.log("error parsing setting value: " + e);
+      }
+    }*/
+
+    /*if (!station || typeof(station) !== "object" || station.length < 1 || typeof(station[0]) !== "object") {
+      station = { code: "embr", direction: "s" };
     }
-    catch (e) {
-      console.log("error parsing setting value: " + e);
-    }
-  }
- 
-  if (!station || typeof(station) !== "object" || station.length < 1 || typeof(station[0]) !== "object") {
-    station = { code: "embr", direction: "s" };
-  }
-  else {
-    station = station[0].value;
-  }
-  let bartApi = new BartAPI();
-  bartApi.realTimeDepartures(station.code, station.direction).then(function(departures) {
-    if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
-      // Limit results to the number of tiles available in firmware
-      departures.splice(TRAIN_COUNT, departures.length);
-      messaging.peerSocket.send(departures);
-    }
-  }).catch(function (e) {
-    console.log("error"); console.log(e)
-  });
+    else {
+      station = station[0].value;
+    }*/
+    let whatsTheClock = new Date().getHours();
+    let station = whatsTheClock < 12 ? STATIONS[0] : STATIONS[1];
+    console.log(station);
+
+    let hFitApi = new HFitAPI();
+    hFitApi.realTimeDepartures(station.id, station.direction, station.name, station.lineIds).then(function(departures) {
+        if (messaging.peerSocket.readyState === messaging.peerSocket.OPEN) {
+            // Limit results to the number of tiles available in firmware
+            departures.splice(DEPATURE_COUNT, departures.length);
+            messaging.peerSocket.send(departures);
+        }
+    }).catch(function (e) {
+        console.log("error"); console.log(e)
+    });
 }

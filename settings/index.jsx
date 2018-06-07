@@ -18,14 +18,14 @@ function mySettings(props) {
   return (
     <Page>
       <Section
-        title={<Text bold align="center">Bart Schedule</Text>}>
+        title={<Text bold align="center">HFit Schedule</Text>}>
         <AdditiveList
           title="Select your favorite stations"
           settingsKey="favorite_station_setting"
           maxItems="5"
           addAction={
             <TextInput
-              title="Add a Bart Station"
+              title="Add a HFit Station"
               label="Name"
               placeholder="Type something"
               action="Add Station"

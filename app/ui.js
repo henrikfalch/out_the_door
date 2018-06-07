@@ -1,64 +1,62 @@
-import { TRAIN_COUNT, STATIONS } from "../common/globals.js";
+import { DEPATURE_COUNT, STATIONS } from "../common/stations.js";
 import document from "document";
 
-export function BartUI() {
-  this.trainList = document.getElementById("trainList");
-  this.statusText = document.getElementById("status");
+export function HFitUI() {
+    this.mainForm = document.getElementById("mainForm");
+    this.mainStatus = document.getElementById("status");
 
-  this.tiles = [];
-  for (let i = 0; i < TRAIN_COUNT; i++) {
-    let tile = document.getElementById(`train-${i}`);
-    if (tile) {
-      this.tiles.push(tile);
+    this.tiles = [];
+    for (let i = 0; i < DEPATURE_COUNT; i++) {
+        let tile = document.getElementById(`train-${i}`);
+        if (tile) {
+            this.tiles.push(tile);
+        }
     }
-  }
 }
 
-BartUI.prototype.updateUI = function(state, departures) {
-  if (state === "loaded") {
-    this.trainList.style.display = "inline";
-    this.statusText.text = "";
+HFitUI.prototype.updateUI = function(state, departures) {
+    if (state === "loaded") {
+        this.mainForm.style.display = "inline";
+        this.mainStatus.text = "";
 
-    this.updateDepartureList(departures);
-  }
-  else {
-    this.trainList.style.display = "none";
-
-    if (state === "loading") {
-      this.statusText.text = "Loading departures ...";
-    }
-    else if (state === "disconnected") {
-      this.statusText.text = "Please check connection to phone and Fitbit App"
-    }
-    else if (state === "error") {
-      this.statusText.text = "Something terrible happened.";
-    }
-  }
-}
-
-BartUI.prototype.updateDepartureList = function(departures) {
-  for (let i = 0; i < TRAIN_COUNT; i++) {
-    let tile = this.tiles[i];
-    if (!tile) {
-      continue;
-    }
-
-    const train = departures[i];
-    if (!train) {
-      tile.style.display = "none";
-      continue;
-    }
-
-    tile.style.display = "inline";
-    train.to = train.to.toLowerCase();
-    if (train.to in STATIONS) {
-      tile.getElementById("destination").text = STATIONS[train.to];
+        this.updateDepartureList(departures);
     }
     else {
-      tile.getElementById("destination").text = train.to;
+        this.mainForm.style.display = "none";
+
+        if (state === "loading") {
+            this.mainStatus.text = "Loading departures ...";
+        }
+        else if (state === "disconnected") {
+            this.mainStatus.text = "Please check connection to phone and Fitbit App"
+        }
+        else if (state === "error") {
+            this.mainStatus.text = "Something terrible happened.";
+        }
     }
-    tile.getElementById("platform").text = train.platform;
-    tile.getElementById("minutes").text = train.minutes + " minutes";
-    tile.getElementById("bike").image = train.bike ? "bike.png" : "nobike.png";
-  }
+}
+
+HFitUI.prototype.updateDepartureList = function(departures) {
+    let firstDepature = departures[0];
+    document.getElementById("destination").text = firstDepature.stopName
+    if (firstDepature.platform !== undefined && firstDepature.stopName.length < 10) {
+        document.getElementById("destination").text = firstDepature.stopName + " mot " + firstDepature.platform;
+    }
+
+    for (let i = 0; i < DEPATURE_COUNT; i++) {
+        let tile = this.tiles[i];
+        if (!tile) {
+            continue;
+        }
+
+        const depature = departures[i];
+        if (!depature) {
+            tile.style.display = "none";
+            continue;
+        }
+
+        tile.style.display = "inline";
+        tile.getElementById("platform").text = "Linje " + depature.lineId;
+        tile.getElementById("minutes").text = depature.minutes === 0 ? "nå" : depature.minutes + " min";
+    }
 }
