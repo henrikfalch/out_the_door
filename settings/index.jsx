@@ -1,4 +1,4 @@
-import { STATIONS } from "../common/globals.js"
+import { STATIONS } from "../common/stations.js"
 
 console.log("Opening BART Settings page");
 

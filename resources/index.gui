@@ -27,4 +27,16 @@
       <use href="#tile-train" />
     </use>
   </use>
+
+  <use id="clothing_1" href="#static-image" x="5" y="130" height="100"
+    width="100">
+      <set href="image" attributeName="href" to=""/>
+   </use>
+
+  <text id="temperature" font-size="35" x="130" y="190" fill="white"></text>
+
+  <use id="clothing_2" href="#static-image" x="100%-135" y="130" height="100"
+    width="100">
+      <set href="image" attributeName="href" to=""/>
+   </use>
 </svg>

@@ -14,24 +14,28 @@ export function HFitUI() {
     }
 }
 
-HFitUI.prototype.updateUI = function(state, departures) {
+HFitUI.prototype.updateUI = function(state, results) {
     if (state === "loaded") {
         this.mainForm.style.display = "inline";
         this.mainStatus.text = "";
 
-        this.updateDepartureList(departures);
+        if (results.weather) {
+            this.updateWeatherList(results);
+        } else {
+            this.updateDepartureList(results);
+        }
     }
     else {
         this.mainForm.style.display = "none";
 
         if (state === "loading") {
-            this.mainStatus.text = "Loading departures ...";
+            this.mainStatus.text = "Loading travel and weather ...";
         }
         else if (state === "disconnected") {
-            this.mainStatus.text = "Please check connection to phone and Fitbit App"
+            this.mainStatus.text = "Connection to phone and Fitbit App ..."
         }
         else if (state === "error") {
-            this.mainStatus.text = "Something terrible happened.";
+            this.mainStatus.text = "Something terrible happened. :(";
         }
     }
 }
@@ -58,5 +62,23 @@ HFitUI.prototype.updateDepartureList = function(departures) {
         tile.style.display = "inline";
         tile.getElementById("platform").text = "Linje " + depature.lineId;
         tile.getElementById("minutes").text = depature.minutes === 0 ? "nå" : depature.minutes + " min";
+    }
+}
+
+HFitUI.prototype.updateWeatherList = function(weather) {
+    if (weather.rain) {
+        document.getElementById("clothing_1").image = "umbrella-rain.png";
+    }
+    document.getElementById("temperature").text = weather.nowTemperature + "°C";
+    if (weather.minTemparature < 0) {
+        document.getElementById("clothing_2").image = "lue.png";
+    } else if (weather.minTemparature < 8) {
+        document.getElementById("clothing_2").image = "jacket.jpg";
+    } else if (weather.minTemparature < 16) {
+        document.getElementById("clothing_2").image = "hoodie.png";
+    } else if (weather.minTemparature < 22) {
+        document.getElementById("clothing_2").image = "t-shirt.png";
+    } else {
+        document.getElementById("clothing_2").image = "ice-cream.png";
     }
 }
