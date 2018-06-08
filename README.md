@@ -1,13 +1,6 @@
-# Bay Area Rapid Transit (BART)
+# Out the door
 
-Fitbit SDK example application which downloads real-time BART data and show
-upcoming trains for a station of your choice.
+Fitbit Ionic app for showing travel times in Oslo/Akershus and what to bring when walking out the door
 
-![Screenshot](screenshot.png)
+![Screenshot](screen.png)
 
-Find out more information on the
-[Fitbit Developer Website](https://dev.fitbit.com).
-
-## License
-
-This example is licensed under the [MIT License](./LICENSE).
