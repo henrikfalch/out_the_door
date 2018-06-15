@@ -1,11 +1,14 @@
 {
   "fitbit": {
+    "appUUID": "b1afe38f-5817-492e-b070-cf2a5df4ce58",
     "appType": "app",
-    "appDisplayName": "BART",
+    "appDisplayName": "out_the_door",
     "iconFile": "resources/icon.png",
-    "wipeColor": "#f44336",
+    "wipeColor": "#8bc34a",
     "requestedPermissions": [
-      "access_internet"
+      "access_internet",
+      "access_location",
+      "run_background"
     ],
     "buildTargets": [
       "higgs",
@@ -13,7 +16,7 @@
     ],
     "i18n": {
       "en": {
-        "name": "BART"
+        "name": "out_the_door"
       }
     }
   }

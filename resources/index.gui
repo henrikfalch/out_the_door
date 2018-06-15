@@ -5,21 +5,20 @@
     <rect id="train-background" height="100%" />
 
     <!-- line 2: time in minutes, platform -->
-    <text id="platform" x="5" y="78" font-size="30" fill="white">Linje 5</text>
-    <text id="minutes"  x="100%-120"   y="78" font-size="30" fill="white">nå</text>
+    <text id="platform" x="5" y="78" font-size="30" fill="white"></text>
+    <text id="minutes"  x="100%-120"   y="78" font-size="30" fill="white"></text>
 
     <rect id="tile-divider-bottom" height="2" />
   </symbol>
 
-  <textarea id="status" class="status">status message to be displayed
-  here</textarea>
+  <textarea id="status" class="status"></textarea>
 
   <use id="mainForm" href="#tile-list" height="100%" width="100%">
     <var id="reorder-enabled" value="0"/>
     <var id="separator-height-bottom" value="2"/>
 
-    <text id="destination" font-size="35" x="5" y="40" fill="white">Name</text>
-
+    <text id="destination" font-size="35" x="5" y="40" fill="white"></text>    
+    
     <use id="train-0" href="#tile-list-item" class="item">
       <use href="#tile-train" />
     </use>
@@ -27,15 +26,15 @@
       <use href="#tile-train" />
     </use>
   </use>
-
-  <use id="clothing_1" href="#static-image" x="5" y="130" height="100"
+  
+  <use id="clothing_1" href="#static-image" x="5" y="135" height="100"
     width="100">
       <set href="image" attributeName="href" to=""/>
    </use>
-
-  <text id="temperature" font-size="35" x="130" y="190" fill="white"></text>
-
-  <use id="clothing_2" href="#static-image" x="100%-135" y="130" height="100"
+  
+  <text id="temperature" font-size="35" x="130" y="190" fill="white"></text>    
+  
+  <use id="clothing_2" href="#static-image" x="100%-135" y="135" height="100"
     width="100">
       <set href="image" attributeName="href" to=""/>
    </use>
