@@ -73,7 +73,9 @@ HFitUI.prototype.updateWeatherList = function (weather) {
     }
     document.getElementById("temperature").text = Math.round(weather.nowTemperature) + "°C";
 
-    if (weather.minTemparature < 0) {
+    if (weather.minTemparature < -10) {
+        document.getElementById("clothing_2").image = "boble.png";
+    } else if (weather.minTemparature < 0) {
         document.getElementById("clothing_2").image = "lue.png";
     } else if (weather.minTemparature < 12) {
         document.getElementById("clothing_2").image = "jacket.jpg";

@@ -1,5 +1,6 @@
 import * as messaging from "messaging";
 import {HFitUI} from "./ui.js";
+import document from "document";
 
 let ui = new HFitUI();
 
@@ -22,4 +23,13 @@ messaging.peerSocket.onmessage = function (evt) {
 messaging.peerSocket.onerror = function (err) {
     // Handle any errors
     ui.updateUI("error");
+}
+
+document.onkeypress = function (e) {
+    if (e.key == "up") {
+        messaging.peerSocket.send({
+            key: "refresh_all"
+        });
+    }
+
 }

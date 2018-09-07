@@ -15,7 +15,7 @@ import {localStorage} from "local-storage";
 messaging.peerSocket.onmessage = function (evt) {
     let lat = localStorage.getItem("lat");
     let lon = localStorage.getItem("lon");
-    if (lat === undefined || lon === undefined || lat === null || lon === null) {
+    if (evt.key == "refresh_all" || lat === undefined || lon === undefined || lat === null || lon === null) {
         console.log("Fetching location");
         geolocation.getCurrentPosition(locationSuccess, locationError);
     } else {
@@ -49,7 +49,7 @@ function locationError(error) {
 
 //started from wakeupInterval or location changed
 
-const WAKE_INTERVAL = 5 * 1000 * 60;
+const WAKE_INTERVAL = 30 * 1000 * 60;
 companion.wakeInterval = WAKE_INTERVAL;
 companion.monitorSignificantLocationChanges = true;
 
